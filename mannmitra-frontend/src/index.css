@@ -1,0 +1,199 @@
+/* CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* --- Google Font and Original Custom Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --mannmitra-blue: #2563eb;
+    --mannmitra-purple: #8b5cf6;
+    --mannmitra-pink: #ec4899;
+    --mannmitra-yellow: #fde047;
+    --background-start: #dbeafe;
+    --background-end: #f0f9ff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    background-image: linear-gradient(135deg, var(--background-start), var(--background-end));
+    color: #1e293b;
+    overflow-y: hidden;
+}
+
+.message { animation: fadeIn 0.3s ease-in-out; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- New Custom Classes for Layout --- */
+
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.main-content {
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  flex-grow: 1;
+  margin-top: 80px; /* Adjusted value */
+}
+.content-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+/* Header Component */
+.app-header {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  padding: 1rem 0;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+.header-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.logo-svg {
+  height: 2.5rem; /* h-10 */
+  width: 2.5rem;  /* w-10 */
+  color: var(--mannmitra-blue);
+}
+.logo-text {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700;    /* font-bold */
+  color: #1e40af;      /* a darker blue for contrast */
+}
+
+.header-button {
+  background-color: var(--mannmitra-blue);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.header-button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+/* Sidebar Component */
+.sidebar {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+.sidebar-button {
+  width: 100%;
+  color: white;
+  font-weight: 700;
+  padding: 1rem 0;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.sidebar-button:hover {
+  transform: scale(1.05);
+}
+.btn-counselor { background-color: #16a34a; }
+.btn-counselor:hover { background-color: #15803d; }
+
+/* Chat Interface Component */
+.chat-interface {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+}
+.chat-messages-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.chat-input-area {
+  margin-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+}
+.chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.chat-input {
+  flex-grow: 1;
+  padding: 1rem;
+  border-radius: 9999px;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+.chat-input:focus {
+  outline: none;
+  border-color: var(--mannmitra-blue);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
+}
+.send-button {
+  background-color: var(--mannmitra-blue);
+  color: white;
+  padding: 1rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: all 0.2s;
+}
+.send-button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+.send-button-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}

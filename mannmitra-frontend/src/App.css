@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Custom color palette and fonts */
+:root {
+    --mannmitra-blue: #2563eb;
+    --mannmitra-purple: #8b5cf6;
+    --mannmitra-pink: #ec4899;
+    --mannmitra-yellow: #fde047;
+    --background-start: #dbeafe;
+    --background-end: #f0f9ff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    background-image: linear-gradient(135deg, var(--background-start), var(--background-end));
+    color: #1e293b;
+    /* The key fix: This prevents a scrollbar from appearing on the main page */
+    overflow-y: hidden;
+}
+
+/* Message animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.message {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal backdrop effect */
+.modal-backdrop {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.chat-container {
+    height: 65vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+.message {
+    max-width: 80%;
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1.5rem;
+    line-height: 1.5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.user-message {
+    background-color: var(--mannmitra-blue);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0.75rem;
+}
+.bot-message {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    margin-right: auto;
+    border-bottom-left-radius: 0.75rem;
+}
+.message.wisdom-message {
+    background: linear-gradient(135deg, var(--mannmitra-yellow), var(--mannmitra-pink));
+    color: #1e293b;
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* Better loading dots */
+.loading-dots div {
+    animation: bounce 0.6s infinite alternate;
+}
+.loading-dots div:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots div:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}

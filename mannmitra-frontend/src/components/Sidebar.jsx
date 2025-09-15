@@ -1,6 +1,7 @@
 import React from 'react';
 
-function Sidebar() {
+// 1. The component now receives the 'onBookCounselorClick' function as a prop
+function Sidebar({ onBookCounselorClick }) {
   return (
     <div className="lg:col-span-1 bg-white p-8 rounded-3xl shadow-xl border border-gray-100 flex flex-col items-center text-center">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Wellness Snapshot</h2>
@@ -17,7 +18,12 @@ function Sidebar() {
         </div>
         <p className="text-sm text-gray-500 mt-2">Currently: <span className="font-semibold text-yellow-600">Moderate Risk</span></p>
       </div>
-      <button className="w-full bg-green-500 text-white font-bold py-4 rounded-full shadow-lg hover:bg-green-600 transition-all transform hover:scale-105">
+      
+      {/* 2. Add the onClick handler to the button */}
+      <button 
+        className="w-full bg-green-500 text-white font-bold py-4 rounded-full shadow-lg hover:bg-green-600 transition-all transform hover:scale-105"
+        onClick={onBookCounselorClick}
+      >
         Book a Counselor
       </button>
     </div>

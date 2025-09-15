@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// The component receives 'messages' and 'onSendMessage' as props
-function ChatInterface({ messages, onSendMessage }) {
+// The component now receives an 'onShowResources' prop
+function ChatInterface({ messages, onSendMessage, onShowResources }) {
   // State to hold the current value of the input field
   const [inputValue, setInputValue] = useState('');
   const chatContainerRef = useRef(null);
@@ -65,7 +65,8 @@ function ChatInterface({ messages, onSendMessage }) {
           <button className="feature-button btn-peer">
             <span role="img" aria-label="friends emoji">🤝</span> Peer Forum
           </button>
-          <button className="feature-button btn-resources">
+          {/* The change is here: added an onClick handler */}
+          <button className="feature-button btn-resources" onClick={onShowResources}>
             <span role="img" aria-label="books emoji">📚</span> Resources
           </button>
         </div>

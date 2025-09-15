@@ -1,0 +1,170 @@
+/* Custom Fonts and Colors (Optional, but good practice) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --mannmitra-blue: #2563eb;
+  --mannmitra-purple: #8b5cf6;
+  --mannmitra-pink: #ec4899;
+  --text-gray-900: #111827;
+  --text-gray-800: #1f2937;
+  --text-gray-700: #374151;
+  --text-gray-600: #4b5563;
+  --background-gray-100: #f3f4f6;
+  /* Add new colors here */
+  --mannmitra-yellow: #fde047;
+  --mannmitra-green: #22c55e;
+  --mannmitra-red: #ef4444;
+  --mannmitra-orange: #f97316;
+}
+
+/* Modal Overlay and Container */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(17, 24, 39, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modalOverlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modalContent {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  max-width: 768px;
+  width: 90%;
+  position: relative;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.3s ease-in-out;
+  transform: scale(0.95);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalOverlay.active .modalContent {
+  transform: scale(1);
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  transition: color 0.2s ease-in-out;
+}
+
+.closeButton:hover {
+  color: #1f2937;
+}
+
+.closeButton svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Modal Content Styling */
+.modalTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-gray-800);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.modalDescription {
+  font-size: 18px;
+  color: var(--text-gray-600);
+  margin-bottom: 24px;
+}
+
+/* New Classes for resource sections */
+.resourceSection {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-gray-800);
+  margin-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.categoryBlock {
+  margin-bottom: 16px;
+}
+
+.categoryTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-gray-700);
+  margin-bottom: 8px;
+}
+
+.resourceList, .podcastGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.resourceCard {
+  background-color: var(--background-gray-100);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid; /* Keep a generic border-left */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.resourceCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.resourceCard a {
+  text-decoration: none;
+  color: var(--mannmitra-blue);
+  transition: color 0.2s ease-in-out;
+}
+
+.resourceCard a:hover {
+  color: var(--mannmitra-purple);
+}
+
+/* New color classes for resource cards */
+.color-yellow { border-left-color: var(--mannmitra-yellow); }
+.color-blue { border-left-color: var(--mannmitra-blue); }
+.color-purple { border-left-color: var(--mannmitra-purple); }
+.color-pink { border-left-color: var(--mannmitra-pink); }
+.color-green { border-left-color: var(--mannmitra-green); }
+.color-red { border-left-color: var(--mannmitra-red); }
+.color-orange { border-left-color: var(--mannmitra-orange); }
+
+/* Responsive layout for larger screens */
+@media (min-width: 768px) {
+  .resourceList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .podcastGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

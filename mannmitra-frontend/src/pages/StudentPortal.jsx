@@ -1,8 +1,9 @@
-import React, { useState } from 'react'; // 1. Import useState
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import ChatInterface from '../components/ChatInterface';
-import DashboardModal from '../components/DashboardModal'; // 2. Import the modal component
+import DashboardModal from '../components/DashboardModal';
+import ResourcesModal from '../components/ResourcesModal'; // Import the ResourcesModal component
 
 function StudentPortal() {
   const [messages, setMessages] = useState([
@@ -12,8 +13,11 @@ function StudentPortal() {
     }
   ]);
 
-  // 3. Add state to manage the modal's visibility
+  // State to manage the Dashboard modal's visibility
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+
+  // New state to manage the Resources modal's visibility
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
 
   const handleSendMessage = (userMessage) => {
     setMessages(prevMessages => [...prevMessages, { text: userMessage, sender: 'user' }]);
@@ -21,23 +25,42 @@ function StudentPortal() {
       setMessages(prevMessages => [...prevMessages, { text: "Thanks for sharing. Can you tell me more?", sender: 'bot' }]);
     }, 1000);
   };
+  
+  // Function to open the Resources modal
+  const handleShowResources = () => {
+    setIsResourcesOpen(true);
+  };
+  
+  // Function to close the Resources modal
+  const handleCloseResources = () => {
+    setIsResourcesOpen(false);
+  };
 
   return (
     <div className="app-container">
-      {/* 4. Pass the function to open the modal as a prop to the Header */}
       <Header onViewDashboardClick={() => setIsDashboardOpen(true)} />
       
       <main className="main-content">
         <div className="content-grid">
           <Sidebar />
-          <ChatInterface messages={messages} onSendMessage={handleSendMessage} />
+          {/* Pass the new handleShowResources function as a prop */}
+          <ChatInterface 
+            messages={messages} 
+            onSendMessage={handleSendMessage} 
+            onShowResources={handleShowResources} 
+          />
         </div>
       </main>
 
-      {/* 5. Render the modal and connect it to the state */}
       <DashboardModal 
         isOpen={isDashboardOpen} 
         onClose={() => setIsDashboardOpen(false)} 
+      />
+
+      {/* Render the ResourcesModal and connect it to its state */}
+      <ResourcesModal
+        isOpen={isResourcesOpen}
+        onClose={handleCloseResources}
       />
     </div>
   );

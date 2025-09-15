@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header() {
+function Header({ onViewDashboardClick }) {
   return (
     <header className="app-header">
       <div className="header-container">
@@ -13,8 +13,8 @@ function Header() {
           <h1 className="logo-text">MannMitra</h1>
         </div>
         
-        {/* The button is now here */}
-        <button className="header-button">
+        {/* Call the prop function on button click */}
+        <button className="header-button" onClick={onViewDashboardClick}>
           View My Dashboard
         </button>
       </div>

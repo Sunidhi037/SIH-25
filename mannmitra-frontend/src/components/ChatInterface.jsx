@@ -59,9 +59,9 @@ function ChatInterface({ messages, onSendMessage }) {
         </form>
 
         <div className="feature-button-container">
-          <button className="feature-button btn-wisdom">
+          {/* <button className="feature-button btn-wisdom">
             <span role="img" aria-label="gita wisdom">🙏</span> Wisdom AI
-          </button>
+          </button> */}
           <button className="feature-button btn-peer">
             <span role="img" aria-label="friends emoji">🤝</span> Peer Forum
           </button>

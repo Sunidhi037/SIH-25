@@ -410,3 +410,32 @@ body {
   background-color: #ec4899; 
   color: white;
 }
+
+/* --- Chat Message Bubbles --- */
+.message {
+  max-width: 80%;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 1.5rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  /* This will be for bot messages */
+  background-color: #f1f5f9;
+  color: #1e293b;
+  align-self: flex-start; /* Aligns to the left */
+  border-bottom-left-radius: 0.25rem; /* Creates a "tail" */
+}
+
+.user-message {
+  background-color: var(--mannmitra-blue);
+  color: white;
+  align-self: flex-end; /* Aligns to the right */
+  border-bottom-right-radius: 0.25rem; /* Creates a "tail" on the other side */
+  border-bottom-left-radius: 1.5rem; /* Resets the other tail */
+}
+
+/* This is needed to make the alignment work */
+.chat-messages-container {
+  display: flex;
+  flex-direction: column;
+}

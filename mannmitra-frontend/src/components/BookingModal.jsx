@@ -5,14 +5,39 @@ function BookingModal({ isOpen, onClose }) {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [error, setError] = useState(''); // State for custom error messages
 
   // State to show a confirmation message
   const [isBooked, setIsBooked] = useState(false);
 
+  // Get today's date in 'YYYY-MM-DD' format for the min attribute
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const handleBookingSubmit = (event) => {
     event.preventDefault();
+
+    // Reset previous errors
+    setError('');
+
+    // New JavaScript Validation for time range
+    const selectedTime = time.split(':').map(Number);
+    const selectedTimeInMinutes = selectedTime[0] * 60 + selectedTime[1];
+    const minTimeInMinutes = 9 * 60; // 9:00 AM
+    const maxTimeInMinutes = 18 * 60; // 6:00 PM
+
+    if (selectedTimeInMinutes < minTimeInMinutes || selectedTimeInMinutes > maxTimeInMinutes) {
+      setError('Timing must be between 9:00 AM and 6:00 PM.');
+      return;
+    }
+    
     // In a real app, you would send this data to a backend server
-    console.log('Booking submitted:', { name: name || 'Anonymous', date, time });
+    console.log('Booking submitted:', { name, date, time });
     
     // Show the confirmation message
     setIsBooked(true);
@@ -33,23 +58,46 @@ function BookingModal({ isOpen, onClose }) {
         </button>
         <h2 className="text-3xl font-bold text-gray-800 mb-6">Book a Confidential Session</h2>
         
-        {/* Conditionally render the form or the confirmation message */}
         {!isBooked ? (
           <form onSubmit={handleBookingSubmit} className="space-y-4">
             <div className="input-group">
-              <label htmlFor="name">Your Name (Optional)</label>
-              <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Leave blank to stay anonymous" />
+              <label htmlFor="name">Your Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                placeholder="Enter your name" 
+                required
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="input-group">
                 <label htmlFor="date">Select Date</label>
-                <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+                <input 
+                  type="date" 
+                  id="date" 
+                  value={date} 
+                  onChange={(e) => setDate(e.target.value)} 
+                  required
+                  min={getTodayDate()}
+                />
               </div>
               <div className="input-group">
                 <label htmlFor="time">Select Time</label>
-                <input type="time" id="time" value={time} onChange={(e) => setTime(e.target.value)} required />
+                <input 
+                  type="time" 
+                  id="time" 
+                  value={time} 
+                  onChange={(e) => setTime(e.target.value)} 
+                  required
+                  min="09:00" 
+                  max="18:00" 
+                />
               </div>
             </div>
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            
             <button type="submit" className="auth-button w-full">Confirm Booking</button>
           </form>
         ) : (

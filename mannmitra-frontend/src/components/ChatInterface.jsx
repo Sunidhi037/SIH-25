@@ -1,26 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// The component now receives an 'onShowResources' prop
-function ChatInterface({ messages, onSendMessage, onShowResources }) {
-  // State to hold the current value of the input field
+// Accept all functions as props
+function ChatInterface({ messages, onSendMessage, onShowPeerForum, onShowResources }) {
   const [inputValue, setInputValue] = useState('');
   const chatContainerRef = useRef(null);
 
-  // This 'useEffect' hook will run every time the 'messages' array changes
   useEffect(() => {
-    // Automatically scroll to the bottom of the chat container
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
   const handleSubmit = (event) => {
-    // Prevent the form from reloading the page
     event.preventDefault();
     if (inputValue.trim() !== '') {
-      // Call the function from the parent component
       onSendMessage(inputValue);
-      // Clear the input field
       setInputValue('');
     }
   };
@@ -28,11 +22,9 @@ function ChatInterface({ messages, onSendMessage, onShowResources }) {
   return (
     <div className="chat-interface">
       <div className="chat-messages-container" ref={chatContainerRef}>
-        {/* Map over the messages array to display each message */}
         {messages.map((message, index) => (
           <div
             key={index}
-            // This className logic applies the correct style based on the sender
             className={`message ${message.sender === 'user' ? 'user-message' : ''}`}
           >
             {message.text}
@@ -41,7 +33,6 @@ function ChatInterface({ messages, onSendMessage, onShowResources }) {
       </div>
 
       <div className="chat-input-area">
-        {/* The form now calls handleSubmit when submitted */}
         <form className="chat-input-wrapper" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -62,10 +53,11 @@ function ChatInterface({ messages, onSendMessage, onShowResources }) {
           {/* <button className="feature-button btn-wisdom">
             <span role="img" aria-label="gita wisdom">🙏</span> Wisdom AI
           </button> */}
-          <button className="feature-button btn-peer">
+          {/* Connect the Peer Forum button */}
+          <button className="feature-button btn-peer" onClick={onShowPeerForum}>
             <span role="img" aria-label="friends emoji">🤝</span> Peer Forum
           </button>
-          {/* The change is here: added an onClick handler */}
+          {/* Connect the Resources button */}
           <button className="feature-button btn-resources" onClick={onShowResources}>
             <span role="img" aria-label="books emoji">📚</span> Resources
           </button>

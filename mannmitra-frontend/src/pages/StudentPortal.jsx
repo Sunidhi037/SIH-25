@@ -4,7 +4,8 @@ import Sidebar from '../components/Sidebar';
 import ChatInterface from '../components/ChatInterface';
 import DashboardModal from '../components/DashboardModal';
 import BookingModal from '../components/BookingModal';
-import ResourcesModal from '../components/ResourcesModal'; // Import all necessary modals
+import PeerForumModal from '../components/PeerForumModal';
+import ResourcesModal from '../components/ResourcesModal';
 
 function StudentPortal() {
   // --- State Management for all features ---
@@ -13,7 +14,8 @@ function StudentPortal() {
   ]);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false); // State for the new Resources modal
+  const [isPeerForumOpen, setIsPeerForumOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
 
   const [activityData, setActivityData] = useState({
     labels: ['Chat Sessions', 'Resources Viewed', 'Peer Forum', 'Meetings Booked'],
@@ -21,11 +23,9 @@ function StudentPortal() {
   });
   const [recentActivities, setRecentActivities] = useState([
     { type: 'Chat with MannMitra:', details: 'Discussed exam anxiety.' },
-    { type: 'Resource Viewed:', details: '"10-Minute Guided Meditation" audio.' },
-    { type: 'Peer Forum Post:', details: '"Best tips to stay motivated."' }
   ]);
 
-  // --- Event Handlers for all features ---
+  // --- Event Handlers ---
   const handleSendMessage = (userMessage) => {
     setMessages(prevMessages => [...prevMessages, { text: userMessage, sender: 'user' }]);
     setTimeout(() => {
@@ -41,7 +41,7 @@ function StudentPortal() {
     setRecentActivities(prevActivities => [newActivity, ...prevActivities]);
     setActivityData(prevData => {
       const newData = [...prevData.datasets[0].data];
-      newData[3] += 1; // Increment the 'Meetings Booked' slice
+      newData[3] += 1;
       return {
         ...prevData,
         datasets: [{ ...prevData.datasets[0], data: newData }]
@@ -55,29 +55,31 @@ function StudentPortal() {
       <main className="main-content">
         <div className="content-grid">
           <Sidebar onBookCounselorClick={() => setIsBookingOpen(true)} />
-          {/* Pass the onShowResources function to the ChatInterface */}
           <ChatInterface 
             messages={messages} 
             onSendMessage={handleSendMessage} 
+            onShowPeerForum={() => setIsPeerForumOpen(true)} 
             onShowResources={() => setIsResourcesOpen(true)} 
           />
         </div>
       </main>
       
-      {/* Render all three modals */}
+      {/* Render all modals */}
       <DashboardModal 
         isOpen={isDashboardOpen} 
         onClose={() => setIsDashboardOpen(false)}
         activityData={activityData}
         recentActivities={recentActivities}
       />
-      
       <BookingModal 
         isOpen={isBookingOpen} 
         onClose={() => setIsBookingOpen(false)} 
         onMeetingBooked={handleMeetingBooked}
       />
-
+      <PeerForumModal
+        isOpen={isPeerForumOpen}
+        onClose={() => setIsPeerForumOpen(false)}
+      />
       <ResourcesModal
         isOpen={isResourcesOpen}
         onClose={() => setIsResourcesOpen(false)}

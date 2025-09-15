@@ -1,5 +1,7 @@
 /* CSS Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -7,56 +9,209 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --mannmitra-blue: #2563eb;
-    --mannmitra-purple: #8b5cf6;
-    --mannmitra-pink: #ec4899;
-    --mannmitra-yellow: #fde047;
-    --background-start: #dbeafe;
-    --background-end: #f0f9ff;
+  --mannmitra-blue: #2563eb;
+  --mannmitra-purple: #8b5cf6;
+  --mannmitra-pink: #ec4899;
+  --mannmitra-yellow: #fde047;
+  --background-start: #dbeafe;
+  --background-end: #f0f9ff;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f0f4f8;
-    background-image: linear-gradient(135deg, var(--background-start), var(--background-end));
-    color: #1e293b;
-    overflow-y: hidden;
+  font-family: 'Inter', sans-serif;
+  background-color: #f0f4f8;
+  background-image: linear-gradient(135deg, var(--background-start), var(--background-end));
+  color: #1e293b;
 }
 
-.message { animation: fadeIn 0.3s ease-in-out; }
+.message {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* --- New Custom Classes for Layout --- */
+/* --- Login & Signup Page Styles --- */
+.auth-page {
+  width: 100%;
+  padding: 3rem 1rem;
+}
 
-/* App Layout */
+.auth-page-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.auth-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.auth-header {
+  margin-bottom: 1rem;
+}
+
+.auth-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.auth-subtitle {
+  margin-top: 0.25rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.input-group input {
+  padding: 0.6rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--mannmitra-blue);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.checkbox-group label {
+  color: #64748b;
+}
+
+.auth-button {
+  background-color: var(--mannmitra-blue);
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.auth-button:hover {
+  background-color: #1d4ed8;
+}
+
+.auth-footer {
+  margin-top: 1rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.auth-link {
+  color: var(--mannmitra-blue);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.auth-tabs {
+  display: flex;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: #f1f5f9;
+  padding: 0.25rem;
+}
+
+.tab-button {
+  flex-grow: 1;
+  padding: 0.5rem 0;
+  border: none;
+  background-color: transparent;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button.active {
+  background-color: white;
+  color: var(--mannmitra-blue);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+/* --- App Layout (Student Portal) --- */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
 .main-content {
   width: 90%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0;
   flex-grow: 1;
-  margin-top: 80px; /* Adjusted value */
+  margin-top: 110px;
 }
+
 .content-grid {
   display: grid;
   gap: 2rem;
   align-items: start;
-}
-@media (min-width: 1024px) {
-  .content-grid {
-    grid-template-columns: 1fr 2fr;
-  }
+  grid-template-columns: 1fr 2fr;
 }
 
-/* Header Component */
+/* --- Header Component --- */
 .app-header {
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
@@ -66,8 +221,9 @@ body {
   width: 100%;
   z-index: 10;
 }
+
 .header-container {
-  width: 100%;
+  width: 95%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
@@ -75,20 +231,23 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
 .logo-container {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
+
 .logo-svg {
-  height: 2.5rem; /* h-10 */
-  width: 2.5rem;  /* w-10 */
+  height: 2.5rem;
+  width: 2.5rem;
   color: var(--mannmitra-blue);
 }
+
 .logo-text {
-  font-size: 1.875rem; /* text-3xl */
-  font-weight: 700;    /* font-bold */
-  color: #1e40af;      /* a darker blue for contrast */
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1e40af;
 }
 
 .header-button {
@@ -101,12 +260,13 @@ body {
   cursor: pointer;
   transition: all 0.2s;
 }
+
 .header-button:hover {
   background-color: #1d4ed8;
   transform: scale(1.05);
 }
 
-/* Sidebar Component */
+/* --- Sidebar Component --- */
 .sidebar {
   background-color: white;
   padding: 2rem;
@@ -118,12 +278,14 @@ body {
   align-items: center;
   text-align: center;
 }
+
 .sidebar-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 1.5rem;
 }
+
 .sidebar-button {
   width: 100%;
   color: white;
@@ -135,13 +297,20 @@ body {
   border: none;
   cursor: pointer;
 }
+
 .sidebar-button:hover {
   transform: scale(1.05);
 }
-.btn-counselor { background-color: #16a34a; }
-.btn-counselor:hover { background-color: #15803d; }
 
-/* Chat Interface Component */
+.btn-counselor {
+  background-color: #16a34a;
+}
+
+.btn-counselor:hover {
+  background-color: #15803d;
+}
+
+/* --- Chat Interface Component --- */
 .chat-interface {
   background-color: white;
   padding: 2rem;
@@ -152,20 +321,24 @@ body {
   flex-direction: column;
   height: 75vh;
 }
+
 .chat-messages-container {
   flex-grow: 1;
   overflow-y: auto;
 }
+
 .chat-input-area {
   margin-top: 1rem;
   border-top: 1px solid #e2e8f0;
   padding-top: 1.5rem;
 }
+
 .chat-input-wrapper {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
+
 .chat-input {
   flex-grow: 1;
   padding: 1rem;
@@ -174,11 +347,13 @@ body {
   border: 1px solid #e2e8f0;
   transition: all 0.2s;
 }
+
 .chat-input:focus {
   outline: none;
   border-color: var(--mannmitra-blue);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
 }
+
 .send-button {
   background-color: var(--mannmitra-blue);
   color: white;
@@ -189,11 +364,49 @@ body {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   transition: all 0.2s;
 }
+
 .send-button:hover {
   background-color: #1d4ed8;
   transform: scale(1.05);
 }
+
 .send-button-icon {
   height: 1.5rem;
   width: 1.5rem;
+}
+
+/* --- Feature Buttons --- */
+.feature-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.feature-button {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feature-button:hover {
+  transform: scale(1.05);
+}
+
+.btn-wisdom {
+  background-color: #fde047; 
+  color: #4b5563;
+}
+.btn-peer {
+  background-color: #8b5cf6; 
+  color: white;
+}
+.btn-resources {
+  background-color: #ec4899; 
+  color: white;
 }

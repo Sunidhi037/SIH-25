@@ -1,21 +1,19 @@
 import React from 'react';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import ChatInterface from './components/ChatInterface';
-import './index.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import StudentPortal from './pages/StudentPortal';
+// import './index.css'; // Delete this line
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="container mx-auto px-4 py-8 flex-grow mt-[80px]">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <Sidebar />
-          <ChatInterface />
-        </div>
-      </main>
-      {/* The modal will be added later */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/student-portal" element={<StudentPortal />} />
+      </Routes>
+    </Router>
   );
 }
 

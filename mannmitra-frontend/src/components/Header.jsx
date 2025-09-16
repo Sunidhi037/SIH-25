@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header({ onViewDashboardClick }) {
+function Header({ onViewDashboardClick, userType = 'student' }) {
   return (
     <header className="app-header">
       <div className="header-container">
@@ -13,10 +13,11 @@ function Header({ onViewDashboardClick }) {
           <h1 className="logo-text">MannMitra</h1>
         </div>
         
-        {/* Call the prop function on button click */}
-        <button className="header-button" onClick={onViewDashboardClick}>
-          View My Dashboard
-        </button>
+        {userType === 'student' && (
+          <button className="header-button" onClick={onViewDashboardClick}>
+            View My Dashboard
+          </button>
+        )}
       </div>
     </header>
   );

@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
-// Import the useNavigate hook from react-router-dom
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
-  // 'useState' to remember which tab is active.
   const [activeTab, setActiveTab] = useState('student');
-
-  // Call the useNavigate hook to get the navigation function
   const navigate = useNavigate();
 
-  // This function will run when the form is submitted
   const handleLogin = (event) => {
-    // Prevent the browser from reloading the page
     event.preventDefault();
+    console.log(`Logging in as: ${activeTab}`);
 
-    // For now, we will just simulate a successful login
-    // In a real app, you would check the username and password here
-    console.log('Logging in...');
-
-    // Navigate to the student portal page
-    navigate('/student-portal');
+    if (activeTab === 'student') {
+      navigate('/student-portal');
+    } else if (activeTab === 'counselor') {
+      navigate('/counselor-dashboard');
+    } else if (activeTab === 'admin') {
+      // This now navigates to the admin dashboard
+      navigate('/admin-dashboard');
+    }
   };
 
   return (
@@ -51,7 +48,6 @@ function LoginPage() {
           </button>
         </div>
 
-        {/* Add the onSubmit handler to the form */}
         <form className="auth-form" onSubmit={handleLogin}>
           {activeTab === 'student' && (
             <div className="input-group">

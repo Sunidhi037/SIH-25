@@ -1,25 +1,46 @@
 import React, { useState } from 'react';
-// Import the useNavigate hook from react-router-dom
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
-  // 'useState' to remember which tab is active.
   const [activeTab, setActiveTab] = useState('student');
-
-  // Call the useNavigate hook to get the navigation function
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // This function will run when the form is submitted
-  const handleLogin = (event) => {
-    // Prevent the browser from reloading the page
+  // Handle login submit
+  const handleLogin = async (event) => {
     event.preventDefault();
+    setError('');
 
-    // For now, we will just simulate a successful login
-    // In a real app, you would check the username and password here
-    console.log('Logging in...');
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          role: activeTab,
+          collegeId: identifier, // collegeId / email / username depending on role
+          password,
+        }),
+      });
 
-    // Navigate to the student portal page
-    navigate('/student-portal');
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Login failed");
+        return;
+      }
+
+      // Save token to localStorage
+      localStorage.setItem("token", data.token);
+
+      // Redirect based on role
+      if (activeTab === "student") navigate("/student-portal");
+      else if (activeTab === "counselor") navigate("/counselor-dashboard");
+      else if (activeTab === "admin") navigate("/admin-dashboard");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -32,61 +53,93 @@ function LoginPage() {
 
         <div className="auth-tabs">
           <button
-            className={`tab-button ${activeTab === 'student' ? 'active' : ''}`}
-            onClick={() => setActiveTab('student')}
+            className={`tab-button ${activeTab === "student" ? "active" : ""}`}
+            onClick={() => setActiveTab("student")}
           >
             Student
           </button>
           <button
-            className={`tab-button ${activeTab === 'counselor' ? 'active' : ''}`}
-            onClick={() => setActiveTab('counselor')}
+            className={`tab-button ${activeTab === "counselor" ? "active" : ""}`}
+            onClick={() => setActiveTab("counselor")}
           >
             Counselor
           </button>
           <button
-            className={`tab-button ${activeTab === 'admin' ? 'active' : ''}`}
-            onClick={() => setActiveTab('admin')}
+            className={`tab-button ${activeTab === "admin" ? "active" : ""}`}
+            onClick={() => setActiveTab("admin")}
           >
             Admin
           </button>
         </div>
 
-        {/* Add the onSubmit handler to the form */}
         <form className="auth-form" onSubmit={handleLogin}>
-          {activeTab === 'student' && (
+          {activeTab === "student" && (
             <div className="input-group">
               <label htmlFor="collegeId">College ID</label>
-              <input type="text" id="collegeId" placeholder="Enter your College ID" required />
+              <input
+                type="text"
+                id="collegeId"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder="Enter your College ID"
+                required
+              />
             </div>
           )}
 
-          {activeTab === 'counselor' && (
+          {activeTab === "counselor" && (
             <div className="input-group">
               <label htmlFor="counselorId">Counselor ID / Email</label>
-              <input type="text" id="counselorId" placeholder="Enter your Counselor ID or Email" required />
+              <input
+                type="text"
+                id="counselorId"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder="Enter your Counselor ID or Email"
+                required
+              />
             </div>
           )}
 
-          {activeTab === 'admin' && (
+          {activeTab === "admin" && (
             <div className="input-group">
               <label htmlFor="adminId">Admin Username</label>
-              <input type="text" id="adminId" placeholder="Enter your Admin Username" required />
+              <input
+                type="text"
+                id="adminId"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                placeholder="Enter your Admin Username"
+                required
+              />
             </div>
           )}
 
           <div className="input-group">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required />
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+            />
           </div>
+
+          {error && <p className="error-message">{error}</p>}
+
           <button type="submit" className="auth-button">
             Login
           </button>
         </form>
 
         <div className="auth-footer">
-          <a href="/forgot-password" className="auth-link">Forgot Password?</a>
+          <a href="/forgot-password" className="auth-link">
+            Forgot Password?
+          </a>
           <p>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{" "}
             <a href="/signup" className="auth-link">Sign Up</a>
           </p>
         </div>

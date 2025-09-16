@@ -1,3 +1,6 @@
+/* --- Google Font and Original Custom Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* CSS Reset */
 *,
 *::before,
@@ -5,8 +8,6 @@
   box-sizing: border-box;
 }
 
-/* --- Google Font and Original Custom Styles --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   --mannmitra-blue: #2563eb;

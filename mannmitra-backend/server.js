@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// ✅ CORS config
+// ✅ Final & Most Robust CORS Configuration
 const allowedOrigins = [
   "http://localhost:3000",
   "https://sih-25-ochre.vercel.app"
@@ -29,9 +29,12 @@ const corsOptions = {
     return callback(null, true);
   },
   credentials: true,
-  optionsSuccessStatus: 200 
 };
 
+// This line handles the preflight 'OPTIONS' request for all routes
+app.options('*', cors(corsOptions));
+
+// This line handles all other requests
 app.use(cors(corsOptions));
 
 

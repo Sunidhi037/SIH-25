@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // 1. useEffect added here
 import { useNavigate } from "react-router-dom";
 
 
@@ -19,6 +19,11 @@ function SignupPage() {
   // API feedback
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
+
+  // 2. This is the debugging code we added.
+  useEffect(() => {
+    console.log("Checking API URL:", process.env.REACT_APP_API_URL);
+  }, []);
 
   // Password rules
   const validatePassword = (value) => {

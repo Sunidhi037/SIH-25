@@ -13,10 +13,16 @@ const app = express();
 app.use(express.json());
 
 // ✅ CORS config
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://sih-25-ochre.vercel.app"
+];
+
 app.use(cors({
-  origin: "https://sih-25-ochre.vercel.app",
+  origin: allowedOrigins,
   credentials: true
 }));
+
 
 // 🔗 MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
@@ -114,12 +120,5 @@ app.get("/api/profile", verifyToken, async (req, res) => {
 });
 
 // ================== Start Server ==================
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://sih-25-ochre.vercel.app"
-];
-
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

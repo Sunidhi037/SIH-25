@@ -114,5 +114,12 @@ app.get("/api/profile", verifyToken, async (req, res) => {
 });
 
 // ================== Start Server ==================
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://sih-25-ochre.vercel.app"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));

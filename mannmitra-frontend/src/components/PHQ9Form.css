@@ -1,0 +1,138 @@
+.phq9-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.phq9-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.phq9-intro {
+  font-size: 1rem;
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.question-block {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.question-text {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.phq9-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #2563eb;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.phq9-submit-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.phq9-submit-btn:hover:not(:disabled) {
+  background-color: #1e40af;
+  transform: translateY(-2px);
+}
+
+.phq9-result-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.result-block {
+  margin-bottom: 1rem;
+}
+
+.result-heading {
+  font-size: 1.25rem;
+  color: #1f2937;
+}
+
+.result-score {
+  font-size: 1.5rem;
+  color: #1f2937;
+}
+
+.result-level {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+/* Color coding for risk levels */
+.level-minimal-depression, .level-minimal-anxiety, .level-mild-anxiety { color: #22c55e; } /* Green */
+.level-mild-depression { color: #fde047; }    /* Yellow */
+.level-moderate-anxiety { color: #f97316; }   /* Orange */
+.level-moderate-depression, .level-moderately-severe-depression { color: #ef4444; } /* Red */
+.level-severe-anxiety { color: #b91c1c; }     /* Dark Red */
+.level-severe-depression { color: #b91c1c; }
+
+.result-disclaimer {
+  margin-top: 2rem;
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* New heading for sections */
+.section-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .options-container {
+    flex-direction: row; /* Switch to horizontal layout on larger screens */
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+}

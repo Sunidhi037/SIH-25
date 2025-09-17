@@ -14,12 +14,12 @@ function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           role: activeTab,
-          collegeId: identifier, // collegeId / email / username depending on role
+          collegeId: identifier, // student: collegeId, counselor/admin: their ID/email
           password,
         }),
       });
@@ -39,6 +39,7 @@ function LoginPage() {
       else if (activeTab === "counselor") navigate("/counselor-dashboard");
       else if (activeTab === "admin") navigate("/admin-dashboard");
     } catch (err) {
+      console.error("❌ Login Error:", err);
       setError("Something went wrong. Please try again.");
     }
   };
@@ -51,6 +52,7 @@ function LoginPage() {
           <p className="auth-subtitle">Please sign in to continue</p>
         </div>
 
+        {/* Tabs for role */}
         <div className="auth-tabs">
           <button
             className={`tab-button ${activeTab === "student" ? "active" : ""}`}

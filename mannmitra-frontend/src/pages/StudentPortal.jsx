@@ -7,51 +7,41 @@ import BookingModal from '../components/BookingModal';
 import PeerForumModal from '../components/PeerForumModal';
 import ResourcesModal from '../components/ResourcesModal';
 
-function StudentPortal() {
-  // --- State Management for all features ---
-  const [messages, setMessages] = useState([
-    { text: "Namaste! Welcome to MannMitra...", sender: 'bot' }
-  ]);
+// It now receives 'onBookMeeting' from App.jsx
+function StudentPortal({ meetings, onBookMeeting }) {
+  const [messages, setMessages] = useState([ { text: "Namaste! Welcome...", sender: 'bot' } ]);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isPeerForumOpen, setIsPeerForumOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
 
+  // The dashboard state now correctly counts the meetings from props
   const [activityData, setActivityData] = useState({
     labels: ['Chat Sessions', 'Resources Viewed', 'Peer Forum', 'Meetings Booked'],
-    datasets: [{ data: [60, 25, 15, 0], backgroundColor: ['#2563eb', '#ec4899', '#8b5cf6', '#16a34a'], hoverOffset: 4 }]
+    datasets: [{ data: [60, 25, 15, meetings.length], backgroundColor: ['#2563eb', '#ec4899', '#8b5cf6', '#16a34a'], hoverOffset: 4 }]
   });
-  const [recentActivities, setRecentActivities] = useState([
-    { type: 'Chat with MannMitra:', details: 'Discussed exam anxiety.' },
-  ]);
+  const [recentActivities, setRecentActivities] = useState([ { type: 'Chat with MannMitra:', details: 'Discussed exam anxiety.' } ]);
 
-  // --- Event Handlers ---
-  const handleSendMessage = (userMessage) => {
-    setMessages(prevMessages => [...prevMessages, { text: userMessage, sender: 'user' }]);
-    setTimeout(() => {
-      setMessages(prevMessages => [...prevMessages, { text: "Thanks for sharing. Can you tell me more?", sender: 'bot' }]);
-    }, 1000);
-  };
+  const handleSendMessage = (userMessage) => { /* ... */ };
   
   const handleMeetingBooked = (bookingDetails) => {
-    const newActivity = {
-      type: 'Meeting Booked:',
-      details: `Session on ${bookingDetails.date} at ${bookingDetails.time}`
-    };
-    setRecentActivities(prevActivities => [newActivity, ...prevActivities]);
-    setActivityData(prevData => {
-      const newData = [...prevData.datasets[0].data];
+    // Call the function from App.jsx to update the shared list
+    onBookMeeting(bookingDetails);
+
+    // Update the local dashboard state
+    const newActivity = { type: 'Meeting Booked:', details: `Session on ${bookingDetails.date} at ${bookingDetails.time}` };
+    setRecentActivities(prev => [newActivity, ...prev]);
+    setActivityData(prev => {
+      const newData = [...prev.datasets[0].data];
       newData[3] += 1;
-      return {
-        ...prevData,
-        datasets: [{ ...prevData.datasets[0], data: newData }]
-      };
+      return { ...prev, datasets: [{ ...prev.datasets[0], data: newData }] };
     });
   };
 
   return (
     <div className="app-container">
-      <Header onViewDashboardClick={() => setIsDashboardOpen(true)} />
+      {/* This line tells the Header to show the student version */}
+      <Header onViewDashboardClick={() => setIsDashboardOpen(true)} userType="student" />
       <main className="main-content">
         <div className="content-grid">
           <Sidebar onBookCounselorClick={() => setIsBookingOpen(true)} />
@@ -64,26 +54,10 @@ function StudentPortal() {
         </div>
       </main>
       
-      {/* Render all modals */}
-      <DashboardModal 
-        isOpen={isDashboardOpen} 
-        onClose={() => setIsDashboardOpen(false)}
-        activityData={activityData}
-        recentActivities={recentActivities}
-      />
-      <BookingModal 
-        isOpen={isBookingOpen} 
-        onClose={() => setIsBookingOpen(false)} 
-        onMeetingBooked={handleMeetingBooked}
-      />
-      <PeerForumModal
-        isOpen={isPeerForumOpen}
-        onClose={() => setIsPeerForumOpen(false)}
-      />
-      <ResourcesModal
-        isOpen={isResourcesOpen}
-        onClose={() => setIsResourcesOpen(false)}
-      />
+      <DashboardModal isOpen={isDashboardOpen} onClose={() => setIsDashboardOpen(false)} activityData={activityData} recentActivities={recentActivities} />
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} onMeetingBooked={handleMeetingBooked} />
+      <PeerForumModal isOpen={isPeerForumOpen} onClose={() => setIsPeerForumOpen(false)} />
+      <ResourcesModal isOpen={isResourcesOpen} onClose={() => setIsResourcesOpen(false)} />
     </div>
   );
 }

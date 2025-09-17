@@ -1,72 +1,103 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function SignupPage() {
-  const [activeTab, setActiveTab] = useState('student');
+  const [activeTab, setActiveTab] = useState("student");
   const navigate = useNavigate();
 
-  // State for all fields and their errors
-  const [fullName, setFullName] = useState('');
-  const [collegeId, setCollegeId] = useState('');
-  const [password, setPassword] = useState('');
-  
-  const [fullNameError, setFullNameError] = useState('');
-  const [collegeIdError, setCollegeIdError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  // State for inputs
+  const [fullName, setFullName] = useState("");
+  const [collegeId, setCollegeId] = useState("");
+  const [password, setPassword] = useState("");
 
+  // Error states
+  const [fullNameError, setFullNameError] = useState("");
+  const [collegeIdError, setCollegeIdError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // API feedback
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  // Password rules
   const validatePassword = (value) => {
-    if (value.length < 8) return 'Password must be at least 8 characters long.';
-    if (!/[A-Z]/.test(value)) return 'Password must contain at least one capital letter.';
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) return 'Password must contain at least one special character.';
-    return '';
+    if (value.length < 8) return "Password must be at least 8 characters long.";
+    if (!/[A-Z]/.test(value))
+      return "Password must contain at least one capital letter.";
+    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(value))
+      return "Password must contain at least one special character.";
+    return "";
   };
-  
-  // onChange handler for Full Name
-  const handleFullNameChange = (event) => {
-    const value = event.target.value;
+
+  // Handle input changes
+  const handleFullNameChange = (e) => {
+    const value = e.target.value;
     setFullName(value);
-    if (value.trim() === '') {
-      setFullNameError('Full Name cannot be empty.');
-    } else {
-      setFullNameError('');
-    }
+    setFullNameError(value.trim() === "" ? "Full Name cannot be empty." : "");
   };
 
-  // onChange handler for College ID
-  const handleCollegeIdChange = (event) => {
-    const value = event.target.value;
+  const handleCollegeIdChange = (e) => {
+    const value = e.target.value;
     setCollegeId(value);
-    if (value.trim() === '') {
-      setCollegeIdError('College ID cannot be empty.');
-    } else {
-      setCollegeIdError('');
-    }
+    setCollegeIdError(value.trim() === "" ? "College ID cannot be empty." : "");
   };
 
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-    setPasswordError(validatePassword(newPassword));
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(validatePassword(value));
   };
 
-  const handleSignup = (event) => {
+  // ============================
+  //   SUBMIT HANDLER
+  // ============================
+  const handleSignup = async (event) => {
     event.preventDefault();
-    
-    // Check all fields before submitting
+
+    // Validate all before submit
     const passErr = validatePassword(password);
-    const nameErr = fullName.trim() === '' ? 'Full Name cannot be empty.' : '';
-    const idErr = collegeId.trim() === '' ? 'College ID cannot be empty.' : '';
+    const nameErr = fullName.trim() === "" ? "Full Name cannot be empty." : "";
+    const idErr = collegeId.trim() === "" ? "College ID cannot be empty." : "";
 
     setFullNameError(nameErr);
     setCollegeIdError(idErr);
     setPasswordError(passErr);
 
-    if (passErr || nameErr || idErr) {
-      return; // Stop submission if any error exists
-    }
+    if (passErr || nameErr || idErr) return;
 
-    console.log('Creating a new account...');
-    navigate('/student-portal');
+    try {
+      setLoading(true);
+      setServerError("");
+
+      const res = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName,
+          collegeId,
+          password,
+          role: activeTab, // student/counselor/admin
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setServerError(data.message || "Signup failed");
+        return;
+      }
+
+      // Save token in localStorage
+      localStorage.setItem("token", data.token);
+
+      alert("Signup successful! Please login now.");
+      navigate("/"); // go to login page
+    } catch (error) {
+      console.error(error);
+      setServerError("Server error, please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -77,53 +108,116 @@ function SignupPage() {
           <p className="auth-subtitle">Join MannMitra Today</p>
         </div>
 
+        {/* Tabs for role */}
         <div className="auth-tabs">
-          <button className={`tab-button ${activeTab === 'student' ? 'active' : ''}`} onClick={() => setActiveTab('student')}>Student</button>
-          <button className={`tab-button ${activeTab === 'counselor' ? 'active' : ''}`} onClick={() => setActiveTab('counselor')}>Counselor</button>
-          <button className={`tab-button ${activeTab === 'admin' ? 'active' : ''}`} onClick={() => setActiveTab('admin')}>Admin</button>
+          <button
+            type="button"
+            className={`tab-button ${activeTab === "student" ? "active" : ""}`}
+            onClick={() => setActiveTab("student")}
+          >
+            Student
+          </button>
+          <button
+            type="button"
+            className={`tab-button ${activeTab === "counselor" ? "active" : ""}`}
+            onClick={() => setActiveTab("counselor")}
+          >
+            Counselor
+          </button>
+          <button
+            type="button"
+            className={`tab-button ${activeTab === "admin" ? "active" : ""}`}
+            onClick={() => setActiveTab("admin")}
+          >
+            Admin
+          </button>
         </div>
 
         <form className="auth-form" onSubmit={handleSignup} noValidate>
-          {activeTab === 'student' && (
+          {/* Student registration form */}
+          {activeTab === "student" && (
             <>
               <div className="input-group">
                 <label htmlFor="fullName">Full Name</label>
-                <input type="text" id="fullName" value={fullName} onChange={handleFullNameChange} placeholder="Enter your full name" />
-                {fullNameError && <p className="error-message">{fullNameError}</p>}
+                <input
+                  type="text"
+                  id="fullName"
+                  value={fullName}
+                  onChange={handleFullNameChange}
+                  placeholder="Enter your full name"
+                />
+                {fullNameError && (
+                  <p className="error-message">{fullNameError}</p>
+                )}
               </div>
               <div className="input-group">
                 <label htmlFor="collegeId">College ID</label>
-                <input type="text" id="collegeId" value={collegeId} onChange={handleCollegeIdChange} placeholder="Enter your College ID" />
-                {collegeIdError && <p className="error-message">{collegeIdError}</p>}
+                <input
+                  type="text"
+                  id="collegeId"
+                  value={collegeId}
+                  onChange={handleCollegeIdChange}
+                  placeholder="Enter your College ID"
+                />
+                {collegeIdError && (
+                  <p className="error-message">{collegeIdError}</p>
+                )}
               </div>
               <div className="input-group">
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" value={password} onChange={handlePasswordChange} placeholder="Create a password" />
-                {passwordError && <p className="error-message">{passwordError}</p>}
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  placeholder="Create a password"
+                />
+                {passwordError && (
+                  <p className="error-message">{passwordError}</p>
+                )}
               </div>
-            </>
-          )}
 
-          {activeTab === 'counselor' && ( <p className="auth-subtitle">Counselor registration is handled by administration.</p> )}
-          {activeTab === 'admin' && ( <p className="auth-subtitle">Admin registration is handled by administration.</p> )}
-
-          {activeTab === 'student' && (
-            <>
               <div className="checkbox-group">
                 <input type="checkbox" id="terms" required />
-                <label htmlFor="terms"> I agree to the <a href="/terms" className="auth-link">Terms</a> and <a href="/privacy" className="auth-link">Privacy Policy</a>.</label>
+                <label htmlFor="terms">
+                  I agree to the{" "}
+                  <a href="/terms" className="auth-link">
+                    Terms
+                  </a>{" "}
+                  and{" "}
+                  <a href="/privacy" className="auth-link">
+                    Privacy Policy
+                  </a>
+                  .
+                </label>
               </div>
-              <button type="submit" className="auth-button">
-                Create Account
+              <button type="submit" className="auth-button" disabled={loading}>
+                {loading ? "Creating Account..." : "Create Account"}
               </button>
             </>
           )}
+
+          {/* Counselor/Admin info */}
+          {activeTab === "counselor" && (
+            <p className="auth-subtitle">
+              Counselor registration is handled by administration.
+            </p>
+          )}
+          {activeTab === "admin" && (
+            <p className="auth-subtitle">
+              Admin registration is handled by administration.
+            </p>
+          )}
         </form>
+
+        {serverError && <p className="error-message">{serverError}</p>}
 
         <div className="auth-footer">
           <p>
-            Already have an account?{' '}
-            <a href="/" className="auth-link">Login</a>
+            Already have an account?{" "}
+            <a href="/" className="auth-link">
+              Login
+            </a>
           </p>
         </div>
       </div>

@@ -7,7 +7,6 @@ import BookingModal from '../components/BookingModal';
 import PeerForumModal from '../components/PeerForumModal';
 import ResourcesModal from '../components/ResourcesModal';
 
-// It now receives 'onBookMeeting' from App.jsx
 function StudentPortal({ meetings, onBookMeeting }) {
   const [messages, setMessages] = useState([ { text: "Namaste! Welcome...", sender: 'bot' } ]);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
@@ -15,20 +14,16 @@ function StudentPortal({ meetings, onBookMeeting }) {
   const [isPeerForumOpen, setIsPeerForumOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
 
-  // The dashboard state now correctly counts the meetings from props
   const [activityData, setActivityData] = useState({
     labels: ['Chat Sessions', 'Resources Viewed', 'Peer Forum', 'Meetings Booked'],
     datasets: [{ data: [60, 25, 15, meetings.length], backgroundColor: ['#2563eb', '#ec4899', '#8b5cf6', '#16a34a'], hoverOffset: 4 }]
   });
   const [recentActivities, setRecentActivities] = useState([ { type: 'Chat with MannMitra:', details: 'Discussed exam anxiety.' } ]);
 
-  const handleSendMessage = (userMessage) => { /* ... */ };
+  const handleSendMessage = (userMessage) => { /* Logic to send message */ };
   
   const handleMeetingBooked = (bookingDetails) => {
-    // Call the function from App.jsx to update the shared list
     onBookMeeting(bookingDetails);
-
-    // Update the local dashboard state
     const newActivity = { type: 'Meeting Booked:', details: `Session on ${bookingDetails.date} at ${bookingDetails.time}` };
     setRecentActivities(prev => [newActivity, ...prev]);
     setActivityData(prev => {
@@ -40,7 +35,6 @@ function StudentPortal({ meetings, onBookMeeting }) {
 
   return (
     <div className="app-container">
-      {/* This line tells the Header to show the student version */}
       <Header onViewDashboardClick={() => setIsDashboardOpen(true)} userType="student" />
       <main className="main-content">
         <div className="content-grid">

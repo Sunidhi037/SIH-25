@@ -1,27 +1,32 @@
 import React from 'react';
 
-// 1. The component now receives the 'onBookCounselorClick' function as a prop
 function Sidebar({ onBookCounselorClick }) {
   return (
-    <div className="lg:col-span-1 bg-white p-8 rounded-3xl shadow-xl border border-gray-100 flex flex-col items-center text-center">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Wellness Snapshot</h2>
-      <div className="flex items-center space-x-6 mb-6 p-4 bg-blue-50 rounded-2xl shadow-inner w-full">
-        <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-blue-600 text-3xl font-bold border-4 border-blue-200">
-          <span>3</span>
-        </div>
-        <p className="text-lg text-gray-600 font-medium">Consecutive Day Streak</p>
-      </div>
-      <div className="bg-gray-100 rounded-2xl p-6 mb-6 shadow-inner w-full">
-        <h3 className="font-bold text-gray-700 mb-3">Stress Level (PHQ-9)</h3>
-        <div className="w-full bg-gray-300 rounded-full h-3">
-          <div className="bg-yellow-500 h-3 rounded-full shadow-md" style={{ width: '45%' }}></div>
-        </div>
-        <p className="text-sm text-gray-500 mt-2">Currently: <span className="font-semibold text-yellow-600">Moderate Risk</span></p>
-      </div>
+    <div className="sidebar">
+      <h2 className="sidebar-title">Your Wellness Snapshot</h2>
       
-      {/* 2. Add the onClick handler to the button */}
+      {/* This new container helps organize the stats for responsiveness */}
+      <div className="sidebar-stats-container">
+        <div className="stat-card">
+          {/* Using basic flexbox for alignment, which works with our custom CSS */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}>
+            <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: '50%', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--mannmitra-blue)', fontSize: '1.25rem', fontWeight: 'bold', border: '2px solid #bfdbfe' }}>
+              <span>3</span>
+            </div>
+            <p style={{ fontSize: '0.875rem', color: '#475569', fontWeight: '500' }}>Consecutive Day Streak</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <h3 className="font-bold text-gray-700 mb-2 text-sm" style={{ fontWeight: 'bold', color: '#334155', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Stress Level (PHQ-9)</h3>
+          <div className="w-full bg-gray-300 rounded-full h-2" style={{ width: '100%', backgroundColor: '#d1d5db', borderRadius: '9999px', height: '0.5rem' }}>
+            <div className="bg-yellow-500 h-2 rounded-full" style={{ backgroundColor: '#f59e0b', height: '0.5rem', borderRadius: '9999px', width: '45%' }}></div>
+          </div>
+          <p className="text-xs text-gray-500 mt-1" style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>Currently: <span className="font-semibold text-yellow-600" style={{ fontWeight: '600', color: '#d97706' }}>Moderate</span></p>
+        </div>
+      </div>
+
       <button 
-        className="w-full bg-green-500 text-white font-bold py-4 rounded-full shadow-lg hover:bg-green-600 transition-all transform hover:scale-105"
+        className="sidebar-button btn-counselor" 
         onClick={onBookCounselorClick}
       >
         Book a Counselor

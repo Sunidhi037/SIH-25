@@ -4,7 +4,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import StudentPortal from './pages/StudentPortal';
 import CounselorDashboard from './pages/CounselorDashboard';
-import AdminDashboard from './pages/AdminDashboard'; // Import the new page
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   const [meetings, setMeetings] = useState([]);
@@ -33,7 +33,6 @@ function App() {
           path="/counselor-dashboard" 
           element={<CounselorDashboard meetings={meetings} />} 
         />
-        {/* Add the new route for the admin */}
         <Route 
           path="/admin-dashboard" 
           element={<AdminDashboard meetings={meetings} />} 

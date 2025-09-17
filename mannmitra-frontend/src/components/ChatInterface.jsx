@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Accept all functions as props
-function ChatInterface({ messages, onSendMessage, onShowPeerForum, onShowResources }) {
+// Make sure you accept the onShowPHQ9Test prop
+function ChatInterface({ messages, onSendMessage, onShowPeerForum, onShowResources, onShowPHQ9Test }) {
   const [inputValue, setInputValue] = useState('');
   const chatContainerRef = useRef(null);
 
@@ -50,14 +50,13 @@ function ChatInterface({ messages, onSendMessage, onShowPeerForum, onShowResourc
         </form>
 
         <div className="feature-button-container">
-          {/* <button className="feature-button btn-wisdom">
-            <span role="img" aria-label="gita wisdom">🙏</span> Wisdom AI
-          </button> */}
-          {/* Connect the Peer Forum button */}
           <button className="feature-button btn-peer" onClick={onShowPeerForum}>
             <span role="img" aria-label="friends emoji">🤝</span> Peer Forum
           </button>
-          {/* Connect the Resources button */}
+          {/* Make sure this button calls the prop */}
+          <button className="feature-button btn-phq9" onClick={onShowPHQ9Test}>
+            <span role="img" aria-label="test emoji">📋</span> Take a Test
+          </button>
           <button className="feature-button btn-resources" onClick={onShowResources}>
             <span role="img" aria-label="books emoji">📚</span> Resources
           </button>

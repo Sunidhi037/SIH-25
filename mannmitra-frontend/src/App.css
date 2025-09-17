@@ -77,3 +77,19 @@ body {
     from { transform: translateY(0); }
     to { transform: translateY(-8px); }
 }
+.logo-img {
+  height: 70px;
+  width: auto;
+  margin-right: 10px;
+}
+.feature-button.btn-phq9 {
+  background-color: #e73c44; /* A vibrant purple color */
+  color: #ffffff; /* Corrected to use hex code */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.feature-button.btn-phq9:hover {
+ 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px -1px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}

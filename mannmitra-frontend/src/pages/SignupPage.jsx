@@ -22,7 +22,7 @@ function SignupPage() {
 
   // 2. This is the debugging code we added.
   useEffect(() => {
-    console.log("Checking API URL:", process.env.REACT_APP_API_URL);
+    console.log("Checking API URL:", import.meta.env.REACT_APP_API_URL);
   }, []);
 
   // Password rules

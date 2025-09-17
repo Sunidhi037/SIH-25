@@ -15,6 +15,7 @@ app.use(express.json());
 // ✅ Final & Most Robust CORS Configuration
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:5173",
   "https://sih-25-ochre.vercel.app"
 ];
 

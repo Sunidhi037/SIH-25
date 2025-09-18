@@ -17,6 +17,18 @@
   --background-end: #f0f9ff;
 }
 
+/* ChatGPT Solution: Apply scrolling to the main page */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  /* Horizontal scroll ko roke */
+  overflow-y: auto;
+  /* Sirf vertical scrollbar ko allow kare */
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: #f0f4f8;
@@ -188,11 +200,13 @@ body {
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
-/* --- App Layout (Student Portal) --- */
+/* --- App Layout --- */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: visible;
+  /* Container ke andar scroll disable */
 }
 
 .main-content {
@@ -325,6 +339,15 @@ body {
   background-color: #15803d;
 }
 
+.btn-test {
+  background-color: var(--mannmitra-purple);
+  margin-bottom: 1rem;
+}
+
+.btn-test:hover {
+  background-color: #7c3aed;
+}
+
 /* --- Chat Interface Component --- */
 .chat-interface {
   background-color: white;
@@ -413,13 +436,13 @@ body {
   transform: scale(1.05);
 }
 
-.btn-wisdom {
-  background-color: #fde047;
-  color: #4b5563;
-}
-
 .btn-peer {
   background-color: #8b5cf6;
+  color: white;
+}
+
+.btn-test {
+  background-color: var(--mannmitra-purple);
   color: white;
 }
 
@@ -496,7 +519,6 @@ body {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  /* The corrected value */
 }
 
 .dashboard-grid {
@@ -590,11 +612,6 @@ body {
 
 /* --- Responsive Styles --- */
 @media (max-width: 1024px) {
-  .app-container {
-    height: auto;
-    overflow: auto;
-  }
-
   .content-grid {
     grid-template-columns: 1fr;
   }
@@ -611,10 +628,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  body {
-    overflow-y: auto;
-  }
-
   .main-content {
     padding: 1rem 0;
   }

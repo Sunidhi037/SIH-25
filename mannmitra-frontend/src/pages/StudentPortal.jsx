@@ -15,7 +15,7 @@ function StudentPortal({ meetings, onBookMeeting }) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isPeerForumOpen, setIsPeerForumOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-  const [isPHQ9Open, setIsPHQ9Open] = useState(false); // State for the PHQ-9 Test
+  const [isPHQ9Open, setIsPHQ9Open] = useState(false);
 
   // --- State for chat and dashboard data ---
   const [messages, setMessages] = useState([
@@ -32,7 +32,6 @@ function StudentPortal({ meetings, onBookMeeting }) {
   // --- Event Handlers ---
   const handleSendMessage = (userMessage) => {
     setMessages(prevMessages => [...prevMessages, { text: userMessage, sender: 'user' }]);
-    // We'll replace this with the Gemini API call later
     setTimeout(() => {
       setMessages(prevMessages => [...prevMessages, { text: "Thank you for sharing. I'm here to listen.", sender: 'bot' }]);
     }, 1000);
@@ -49,19 +48,12 @@ function StudentPortal({ meetings, onBookMeeting }) {
     });
   };
 
-  // Handlers for the PHQ-9 Test
-  const handleShowPHQ9Test = () => {
-    setIsPHQ9Open(true);
-  };
+  const handleShowPHQ9Test = () => setIsPHQ9Open(true);
 
   const handleCompletePHQ9Test = (score, riskLevel) => {
     setIsPHQ9Open(false);
     const newActivity = { type: 'Test Completed:', details: `PHQ-9 score of ${score} (risk: ${riskLevel})` };
     setRecentActivities(prev => [newActivity, ...prev]);
-    setMessages(prevMessages => [
-      ...prevMessages, 
-      { text: `Your test score is ${score}. This indicates a ${riskLevel} level. This is not a diagnosis. Please consider booking a session with a counselor to discuss this further.`, sender: 'bot' }
-    ]);
   };
 
   return (
@@ -69,15 +61,16 @@ function StudentPortal({ meetings, onBookMeeting }) {
       <Header onViewDashboardClick={() => setIsDashboardOpen(true)} userType="student" />
       <main className="main-content">
         <div className="content-grid">
-          <Sidebar 
-            onBookCounselorClick={() => setIsBookingOpen(true)} 
-            onTakeTestClick={handleShowPHQ9Test} // Pass the test function to the sidebar
-          />
+          {/* Sidebar ONLY handles booking a counselor */}
+          <Sidebar onBookCounselorClick={() => setIsBookingOpen(true)} />
+          
+          {/* ChatInterface handles ALL other buttons */}
           <ChatInterface 
             messages={messages} 
             onSendMessage={handleSendMessage} 
             onShowPeerForum={() => setIsPeerForumOpen(true)} 
-            onShowResources={() => setIsResourcesOpen(true)} 
+            onShowResources={() => setIsResourcesOpen(true)}
+            onShowPHQ9Test={handleShowPHQ9Test} 
           />
         </div>
       </main>
@@ -88,7 +81,6 @@ function StudentPortal({ meetings, onBookMeeting }) {
       <PeerForumModal isOpen={isPeerForumOpen} onClose={() => setIsPeerForumOpen(false)} />
       <ResourcesModal isOpen={isResourcesOpen} onClose={() => setIsResourcesOpen(false)} />
       
-      {/* Render the PHQ-9 Test in a generic modal */}
       <Modal isOpen={isPHQ9Open} onClose={() => setIsPHQ9Open(false)}>
         <PHQ9Form onComplete={handleCompletePHQ9Test} />
       </Modal>

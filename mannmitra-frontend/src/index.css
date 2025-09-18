@@ -192,8 +192,6 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
 }
 
 .main-content {
@@ -456,12 +454,7 @@ body {
   flex-direction: column;
 }
 
-/*
-============================================
---- Modal & Dashboard Styles ---
-============================================
-*/
-
+/* --- Modal & Dashboard Styles --- */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -501,14 +494,14 @@ body {
 .modal-title {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  /* The corrected value */
 }
 
 .dashboard-grid {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: 1fr 1fr;
-  /* Default for desktop */
 }
 
 .dashboard-card {
@@ -523,7 +516,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Specific styles for static cards */
 .static-card {
   display: flex;
   flex-direction: column;
@@ -531,51 +523,37 @@ body {
   align-items: center;
   padding: 1.5rem;
   border-left: 4px solid;
-  /* For the colored border effect */
 }
 
 .static-card:first-of-type {
-  /* Wellness Score */
   background-color: #dcfce7;
-  /* green-100 */
   border-color: #22c55e;
-  /* green-500 */
 }
 
 .static-card:last-of-type {
-  /* Day Streak */
   background-color: #dbeafe;
-  /* blue-100 */
   border-color: #3b82f6;
-  /* blue-500 */
 }
 
 .dashboard-card-text {
   font-weight: bold;
   font-size: 1rem;
-  /* Adjust as needed */
   margin-bottom: 0.5rem;
 }
 
 .dashboard-card-value {
   font-size: 3rem;
-  /* text-5xl */
   font-weight: 800;
-  /* font-extrabold */
   line-height: 1;
-  /* Adjust to prevent extra space */
 }
 
 .dashboard-card-value.score {
   color: #16a34a;
-  /* green-800 */
 }
 
 .dashboard-card-value.streak {
   color: #1d4ed8;
-  /* blue-800 */
 }
-
 
 .chart-card {
   grid-column: span 1 / span 1;
@@ -609,14 +587,7 @@ body {
   font-weight: 600;
 }
 
-
-/*
-============================================
---- Responsive Styles ---
-============================================
-*/
-
-/* Tablet Styles */
+/* --- Responsive Styles --- */
 @media (max-width: 1024px) {
   .app-container {
     height: auto;
@@ -638,7 +609,6 @@ body {
   }
 }
 
-/* Mobile Styles */
 @media (max-width: 768px) {
   body {
     overflow-y: auto;
@@ -694,7 +664,6 @@ body {
     flex-wrap: wrap;
   }
 
-  /* Dashboard Modal mobile styles */
   .modal-content {
     padding: 1rem;
   }
@@ -706,14 +675,12 @@ body {
 
   .dashboard-grid {
     grid-template-columns: 1fr;
-    /* Stack cards on mobile */
   }
 
   .static-card,
   .chart-card,
   .full-width-card {
     grid-column: span 1 / span 1;
-    /* Make all cards full width */
   }
 
   .dashboard-card {
@@ -722,16 +689,13 @@ body {
 
   .dashboard-card-value {
     font-size: 2.5rem;
-    /* Smaller value text on mobile */
   }
 
   .chart-container {
     height: 200px;
-    /* Slightly shorter charts on mobile */
   }
 
   .activity-list-item {
     font-size: 0.875rem;
-    /* Smaller text for activity list */
   }
 }
